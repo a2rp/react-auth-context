@@ -1,0 +1,26 @@
+.container {
+    .topSection {
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 15px;
+    }
+
+    .navlinksContainer {
+        height: 60px;
+        background-color: #333;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+
+        .navlink {
+            color: #fff;
+            padding: 15px;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+    }
+}
