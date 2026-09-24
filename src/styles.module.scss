@@ -1,3 +1,141 @@
 .container {
-    // border: 1px solid #f00;
+    min-height: 100vh;
+    color: #203040;
+    background: #f5f8fb;
+}
+
+.mainContent {
+    max-width: 1180px;
+    min-height: calc(100vh - 160px);
+    margin: 0 auto;
+    padding: 146px 24px 40px;
+}
+
+.page,
+.authCard {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.pageHeader,
+.authCard {
+    padding: 30px;
+    background: #ffffff;
+    border: 1px solid #dbe6f0;
+    border-radius: 16px;
+    box-shadow: 0 12px 30px rgba(30, 59, 87, 0.08);
+}
+
+.pageHeader h1,
+.authCard h1 {
+    margin: 8px 0 12px;
+    color: #102a43;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    line-height: 1.05;
+}
+
+.pageHeader p,
+.authCard > p {
+    max-width: 650px;
+    color: #52657b;
+    font-size: 1rem;
+}
+
+.eyebrow {
+    color: #0b638b;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+}
+
+.featureGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 20px;
+}
+
+.featureCard,
+.pageCard {
+    padding: 22px;
+    background: #ffffff;
+    border: 1px solid #dbe6f0;
+    border-radius: 14px;
+    transition: border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.featureCard:hover,
+.featureCard:focus-within,
+.pageCard:hover {
+    border-color: #6aa6c9;
+    box-shadow: 0 10px 24px rgba(30, 59, 87, 0.12);
+}
+
+.featureCard h2,
+.pageCard h2 {
+    margin-bottom: 8px;
+    color: #17324d;
+    font-size: 1.05rem;
+}
+
+.featureCard p,
+.pageCard p {
+    color: #52657b;
+    line-height: 1.7;
+}
+
+.pageCard {
+    margin-top: 20px;
+}
+
+.primaryLink {
+    display: inline-flex;
+    margin-top: 10px;
+    padding: 10px 16px;
+    color: #ffffff;
+    background: #0b638b;
+    border-radius: 8px;
+    text-decoration: none;
+}
+
+.primaryLink:hover {
+    box-shadow: 0 8px 16px rgba(11, 99, 139, 0.2);
+}
+
+.authCard {
+    max-width: 520px;
+}
+
+.authCard form {
+    display: grid;
+    gap: 18px;
+    margin-top: 24px;
+}
+
+.authCard small {
+    display: block;
+    margin-top: 18px;
+    color: #52657b;
+}
+
+.helper {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+@media (max-width: 760px) {
+    .mainContent {
+        padding: 126px 16px 32px;
+    }
+
+    .pageHeader,
+    .authCard {
+        padding: 22px;
+    }
+
+    .featureGrid {
+        grid-template-columns: 1fr;
+    }
 }

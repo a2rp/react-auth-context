@@ -1,83 +1,92 @@
-import React, { useEffect, useState } from 'react'
-import { NavLink, useNavigate } from 'react-router-dom';
-import { useAuth } from '../util/auth';
-import { Button } from '@mui/material';
+import { useEffect, useState } from "react";
+import { Button } from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
+import CloseIcon from "@mui/icons-material/Close";
+import { NavLink, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import { useAuth } from "../util/auth";
 import styles from "../assets/styles/header.module.scss";
-import Swal from 'sweetalert2';
-
 
 const Header = () => {
-
     const auth = useAuth();
-    const navigate = useNavigate(null);
+    const navigate = useNavigate();
+    const [dateTime, setDateTime] = useState(new Date());
+    const [menuOpen, setMenuOpen] = useState(false);
 
-    const [dateTime, setDateTime] = useState(new Date().toISOString())
-    const updateDateTime = () => {
-        const date = new Date().toISOString();
-        setDateTime(date);
-    }
     useEffect(() => {
-        const timeout = setTimeout(updateDateTime, 1000 * (1 / 60));
-        return () => clearTimeout(timeout);
-    }, [dateTime]);
+        const timer = window.setInterval(() => setDateTime(new Date()), 1000);
+        return () => window.clearInterval(timer);
+    }, []);
+
+    const closeMenu = () => setMenuOpen(false);
 
     const handleLogout = () => {
         Swal.fire({
-            title: "Do you want to save the changes?",
+            title: "Sign out of this session?",
             showDenyButton: true,
-            confirmButtonText: "Save",
-            denyButtonText: `Don't save`
+            confirmButtonText: "Sign out",
+            denyButtonText: "Cancel",
         }).then((result) => {
             if (result.isConfirmed) {
                 auth.logout();
+                closeMenu();
                 navigate("/login");
-            } else if (result.isDenied) {
-                // don not logout
             }
         });
     };
 
     return (
-        <div className={styles.container}>
+        <header className={styles.container}>
             <div className={styles.topSection}>
-                <div>a2rp: an Ashish Ranjan presentation</div>
-                <div>{dateTime}</div>
+                <NavLink to="/home" className={styles.brand} onClick={closeMenu}>
+                    <img src={`${process.env.PUBLIC_URL}/logo.png`} alt="Ashish Ranjan logo" />
+                    <span>Auth Context</span>
+                </NavLink>
+                <time dateTime={dateTime.toISOString()}>{dateTime.toLocaleString()}</time>
+                <button
+                    type="button"
+                    className={styles.menuButton}
+                    onClick={() => setMenuOpen((open) => !open)}
+                    aria-label={menuOpen ? "Close menu" : "Open menu"}
+                    aria-expanded={menuOpen}
+                >
+                    {menuOpen ? <CloseIcon /> : <MenuIcon />}
+                </button>
             </div>
 
-            <div className={styles.navlinksContainer}>
-                <NavLink
-                    to="/home"
-                    className={styles.navlink}
-                    style={({ isActive }) => (isActive ? { color: "orangered" } : { color: "#fff" })}
-                >Home</NavLink>
-                <NavLink
-                    to="/about"
-                    className={styles.navlink}
-                    style={({ isActive }) => (isActive ? { color: "orangered" } : { color: "#fff" })}
-                >About</NavLink>
-                <NavLink
-                    to="/products"
-                    className={styles.navlink}
-                    style={({ isActive }) => (isActive ? { color: "orangered" } : { color: "#fff" })}
-                >Products</NavLink>
-                <NavLink
-                    to="/profile"
-                    className={styles.navlink}
-                    style={({ isActive }) => (isActive ? { color: "orangered" } : { color: "#fff" })}
-                >Profile</NavLink>
-                {!auth.user ? <>
+            <nav className={`${styles.navlinksContainer} ${menuOpen ? styles.open : ""}`} aria-label="Primary navigation">
+                {[
+                    ["/home", "Home"],
+                    ["/about", "About"],
+                    ["/products", "Products"],
+                    ["/profile", "Profile"],
+                ].map(([path, label]) => (
+                    <NavLink
+                        key={path}
+                        to={path}
+                        className={({ isActive }) => `${styles.navlink} ${isActive ? styles.active : ""}`}
+                        onClick={closeMenu}
+                    >
+                        {label}
+                    </NavLink>
+                ))}
+
+                {!auth.user ? (
                     <NavLink
                         to="/login"
-                        className={styles.navlink}
-                        style={({ isActive }) => (isActive ? { color: "orangered" } : { color: "#fff" })}
-                    >Login</NavLink>
-                </> : <>
-                    <Button className={styles.navlink} onClick={handleLogout} color="error" variant="contained">Logout</Button>
-                </>}
-            </div>
-        </div>
-    )
-}
+                        className={({ isActive }) => `${styles.navlink} ${styles.loginLink} ${isActive ? styles.active : ""}`}
+                        onClick={closeMenu}
+                    >
+                        Login
+                    </NavLink>
+                ) : (
+                    <Button className={styles.logoutButton} onClick={handleLogout} color="error" variant="contained">
+                        Logout
+                    </Button>
+                )}
+            </nav>
+        </header>
+    );
+};
 
-export default Header
-
+export default Header;
