@@ -11,6 +11,7 @@ A small React authentication example that demonstrates context-based session sta
 - Protected profile route with redirect handling
 - Responsive fixed header with mobile navigation
 - Icon-only social and support footer links
+- Floating go-to-top control with smooth scrolling
 - Clear example pages for extending the route structure
 
 ## Tech stack
