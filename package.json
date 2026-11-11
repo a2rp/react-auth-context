@@ -24,7 +24,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "predeploy": "npm run build && copy build\\index.html build\\404.html",
+    "predeploy": "npm run build && node scripts/prepare-gh-pages.js",
     "deploy": "npx --yes gh-pages -d build -b gh-pages"
   },
   "eslintConfig": {
@@ -46,5 +46,5 @@
     ]
   },
   "homepage": "https://a2rp.github.io/react-auth-context/",
-  "description": "React authentication example with context state and protected routes."
+  "description": "Browser-only React Context demo with mock login, local session persistence, and client-side protected routes."
 }

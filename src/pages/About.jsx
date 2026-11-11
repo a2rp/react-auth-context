@@ -5,7 +5,7 @@ const About = () => (
         <div className={styles.pageHeader}>
             <span className={styles.eyebrow}>About the project</span>
             <h1>A focused auth learning project.</h1>
-            <p>This example demonstrates context providers, local session persistence, React Router navigation and protected routes without adding unnecessary layers.</p>
+            <p>This browser-only demo checks fixed sample credentials and stores a sample email in local storage. Its route guard teaches client-side routing but does not provide real authentication or protect private data.</p>
         </div>
         <article className={styles.pageCard}>
             <h2>What to explore</h2>

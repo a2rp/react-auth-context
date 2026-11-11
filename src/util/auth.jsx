@@ -6,7 +6,9 @@ const STORAGE_KEY = "auth-user";
 const readUser = () => {
     try {
         const storedUser = window.localStorage.getItem(STORAGE_KEY);
-        return storedUser ? JSON.parse(storedUser) : null;
+        if (!storedUser) return null;
+        const user = JSON.parse(storedUser);
+        return typeof user === "string" && user.trim() ? user : null;
     } catch {
         return null;
     }
@@ -16,13 +18,21 @@ export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(readUser);
 
     const login = (userData) => {
+        try {
+            window.localStorage.setItem(STORAGE_KEY, JSON.stringify(userData));
+        } catch {
+            // Keep the demo session active in memory when browser storage is unavailable.
+        }
         setUser(userData);
-        window.localStorage.setItem(STORAGE_KEY, JSON.stringify(userData));
     };
 
     const logout = () => {
         setUser(null);
-        window.localStorage.removeItem(STORAGE_KEY);
+        try {
+            window.localStorage.removeItem(STORAGE_KEY);
+        } catch {
+            // The current session is still cleared from React state.
+        }
     };
 
     return (
@@ -31,4 +41,10 @@ export const AuthProvider = ({ children }) => {
         </AuthContext.Provider>
     );
 };
-export const useAuth = () => useContext(AuthContext);
+export const useAuth = () => {
+    const auth = useContext(AuthContext);
+    if (!auth) {
+        throw new Error("useAuth must be used inside AuthProvider.");
+    }
+    return auth;
+};

@@ -1,48 +1,38 @@
-# React Auth Context
+# React Auth Context Demo
 
-A small React authentication example that demonstrates context-based session state, protected routes and a responsive application layout.
+A browser-only learning project that demonstrates React Context state, local session persistence, and a client-side protected route.
 
 ![React Auth Context preview](screenshot.png)
 
 ## Features
 
-- Context provider for login and logout state
-- JSON session persistence with local storage
-- Protected profile route with redirect handling
-- Responsive fixed header with mobile navigation
-- Icon-only social and support footer links
-- Floating go-to-top control with smooth scrolling
-- Clear example pages for extending the route structure
-
-## Tech stack
-
-React, Create React App, React Router, Material UI, Sass and React Toastify.
+- Context provider with demo login and logout
+- Sample email saved in browser local storage
+- Protected profile route with return-to-login navigation
+- Responsive layout built with React Router and Material UI
 
 ## Run locally
 
-```bash
+```sh
 npm install
 npm start
 ```
 
+Use the sample account shown on the login page:
+
+- Email: `user1@mail.com`
+- Password: `P@$$w0rd`
+
+## Security boundary
+
+This is a mock authentication example, not a secure login system. The sample credentials are checked in client-side code, and the profile route can be bypassed by editing browser storage or application state. It has no authentication server, password hashing, or access control for real data. Do not use this pattern to protect private information.
+
 ## Deploy
 
-```bash
-npm run deploy
-```
+Run `npm run deploy` to create a production build, prepare the GitHub Pages route fallback, and publish the site.
 
 ## Links
 
-- Portfolio: [https://www.ashishranjan.net](https://www.ashishranjan.net)
-- GitHub: [https://github.com/a2rp](https://github.com/a2rp)
-- CodePen: [https://codepen.io/ash1198](https://codepen.io/ash1198)
-- LinkedIn: [https://www.linkedin.com/in/aashishranjan](https://www.linkedin.com/in/aashishranjan)
-- Facebook: [https://www.facebook.com/theash.ashish/](https://www.facebook.com/theash.ashish/)
-- YouTube: [https://www.youtube.com/@ashishranjan-ashz?sub_confirmation=1](https://www.youtube.com/@ashishranjan-ashz?sub_confirmation=1)
-- Email: [ash.ranjan09@gmail.com](mailto:ash.ranjan09@gmail.com)
-
-## Support
-
-- Support: [https://a2rp-donation-page.netlify.app/](https://a2rp-donation-page.netlify.app/)
-- Buy Me a Coffee: [https://buymeacoffee.com/a2rp](https://buymeacoffee.com/a2rp)
-- Patreon: [https://patreon.com/a2rp](https://patreon.com/a2rp)
+- Live app: [a2rp.github.io/react-auth-context](https://a2rp.github.io/react-auth-context/)
+- Repository: [github.com/a2rp/react-auth-context](https://github.com/a2rp/react-auth-context)
+- Portfolio: [ashishranjan.net](https://www.ashishranjan.net/)

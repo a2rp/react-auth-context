@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react";
-import { Button, CircularProgress, TextField } from "@mui/material";
+import { Button, TextField } from "@mui/material";
 import InfoIcon from "@mui/icons-material/Info";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../util/auth";
 import styles from "../styles.module.scss";
 
 const Login = () => {
     const auth = useAuth();
     const navigate = useNavigate();
-    const [isLoading, setIsLoading] = useState(false);
+    const location = useLocation();
+    const returnTo = location.state?.from?.pathname || "/profile";
     const [email, setEmail] = useState("user1@mail.com");
     const [password, setPassword] = useState("P@$$w0rd");
     const [emailError, setEmailError] = useState("");
@@ -17,9 +18,9 @@ const Login = () => {
 
     useEffect(() => {
         if (auth.user) {
-            navigate("/profile", { replace: true });
+            navigate(returnTo, { replace: true });
         }
-    }, [auth.user, navigate]);
+    }, [auth.user, navigate, returnTo]);
 
     const handleEmailChange = (event) => {
         const value = event.target.value;
@@ -40,16 +41,15 @@ const Login = () => {
             return;
         }
 
-        setIsLoading(true);
-        auth.login(email);
-        navigate("/profile", { replace: true });
+        auth.login(email.trim());
+        navigate(returnTo, { replace: true });
     };
 
     return (
         <section className={styles.authCard}>
-            <span className={styles.eyebrow}>Secure entry</span>
+            <span className={styles.eyebrow}>Browser-only demo</span>
             <h1>Sign in</h1>
-            <p>Use the sample account to open the protected profile route.</p>
+            <p>This page checks sample credentials in the browser and stores the sample email in local storage. It is not production authentication.</p>
             <form onSubmit={handleSubmit}>
                 <TextField
                     type="email"
@@ -58,6 +58,7 @@ const Login = () => {
                     size="small"
                     value={email}
                     onChange={handleEmailChange}
+                    required
                     error={Boolean(emailError)}
                     helperText={emailError ? <span className={styles.helper}><InfoIcon fontSize="small" />{emailError}</span> : ""}
                     autoComplete="email"
@@ -69,15 +70,17 @@ const Login = () => {
                     size="small"
                     value={password}
                     onChange={handlePasswordChange}
+                    required
+                    inputProps={{ minLength: 8 }}
                     error={Boolean(passwordError)}
                     helperText={passwordError ? <span className={styles.helper}><InfoIcon fontSize="small" />{passwordError}</span> : ""}
                     autoComplete="current-password"
                 />
-                <Button type="submit" variant="contained" disabled={isLoading}>
-                    {isLoading ? <CircularProgress size={20} color="inherit" /> : "Sign in"}
+                <Button type="submit" variant="contained">
+                    Sign in
                 </Button>
             </form>
-            <small>Sample: user1@mail.com / P@$$w0rd</small>
+            <small>Sample login: user1@mail.com / P@$$w0rd. This account is not backed by a server.</small>
         </section>
     );
 };
